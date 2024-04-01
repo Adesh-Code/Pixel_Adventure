@@ -5,16 +5,16 @@
     },
     "activeFile": "Level-01.tmx",
     "expandedProjectPaths": [
-        "levels",
-        "."
+        ".",
+        "levels"
     ],
     "fileStates": {
         "Level-01.tmx": {
-            "scale": 1.269140625,
-            "selectedLayer": 0,
+            "scale": 1.7306,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 148.5257002154509,
-                "y": 74.06586642043708
+                "x": 164.39385184329134,
+                "y": 141.56939789668323
             }
         },
         "Pixel Adventure TileSet.tsx": {
@@ -45,8 +45,8 @@
     "map.tileWidth": 16,
     "map.width": 40,
     "openFiles": [
-        "Level-01.tmx",
-        "Pixel_Adventure_TileSet.tsx"
+        "Pixel_Adventure_TileSet.tsx",
+        "Level-01.tmx"
     ],
     "project": "pixel_adventure.tiled-project",
     "recentFiles": [
