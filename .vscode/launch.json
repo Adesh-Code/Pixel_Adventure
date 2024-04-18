@@ -5,9 +5,10 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Debug",
+            "name": "iOS",
             "request": "launch",
-            "type": "dart"
+            "type": "dart",
+            "args": ["-d", "3A4DC4F5-E5AD-45D5-AB08-FE5E1C068A09"]
         },
         {
             "name": "Profile",
@@ -16,10 +17,10 @@
             "flutterMode": "profile"
         },
         {
-            "name": "Release",
+            "name": "Mac",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "release"
+            "args": ["-d", "macOs"]
         }
     ]
 }

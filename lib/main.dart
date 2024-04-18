@@ -6,11 +6,12 @@ import 'package:flutter/material.dart';
 import 'pixel_adventure.dart';
 import 'utils/size_config.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  Flame.device.fullScreen();
-  Flame.device.setLandscape();
+  await Flame.device.fullScreen();
+  await Flame.device.setLandscape();
+
   PixelAdventure game = PixelAdventure();
 
   runApp(
