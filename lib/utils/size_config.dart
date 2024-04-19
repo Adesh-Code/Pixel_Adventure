@@ -13,6 +13,10 @@ class SizeConfig {
   static late double safeBlockHorizontal;
   static late double safeBlockVertical;
 
+  static late bool smallDevice;
+  static late bool mediumDevice;
+  static late bool largeDevice;
+
   static void init(BuildContext context) {
     _mediaQueryData = MediaQuery.of(context);
     screenWidth = _mediaQueryData.size.width;
@@ -29,5 +33,9 @@ class SizeConfig {
 
     safeBlockHorizontal = (screenWidth - safeAreaHorizontal) / 100;
     safeBlockVertical = (screenHeight - safeAreaVertical) / 100;
+
+    smallDevice = screenWidth <= 640;
+    mediumDevice = 640 < screenWidth && screenWidth <= 1000;
+    largeDevice = 1000 < screenWidth;
   }
 }

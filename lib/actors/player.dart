@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 
 import '../pixel_adventure.dart';
 
-enum MovementDirection { left, right, none }
+enum PlayerDirection { left, right, none }
 
 class Player extends SpriteAnimationGroupComponent
     with HasGameRef<PixelAdventure>, KeyboardHandler {
@@ -22,12 +22,45 @@ class Player extends SpriteAnimationGroupComponent
   final double stepTime = 0.05;
   final Vector2 playerSize = Vector2.all(32);
 
-  MovementDirection _playerDirection = MovementDirection.none;
+  PlayerDirection playerDirection = PlayerDirection.none;
   double moveSpeed = 100;
   Vector2 velocity = Vector2.zero();
   bool isFacingRight = true;
 
   Player({this.character = PlayerCosmetics.mask});
+
+  @override
+  FutureOr<void> onLoad() async {
+    _loadAnimations();
+    return super.onLoad();
+  }
+
+  @override
+  void update(double dt) {
+    _updatePlayerMovement(dt);
+    return super.update(dt);
+  }
+
+  @override
+  bool onKeyEvent(KeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
+    final bool isLeftKeyPressed =
+        keysPressed.contains(LogicalKeyboardKey.keyA) ||
+            keysPressed.contains(LogicalKeyboardKey.arrowLeft);
+    final bool isRightKeyPressed =
+        keysPressed.contains(LogicalKeyboardKey.keyD) ||
+            keysPressed.contains(LogicalKeyboardKey.arrowRight);
+
+    if (isLeftKeyPressed && isRightKeyPressed) {
+      playerDirection = PlayerDirection.none;
+    } else if (isLeftKeyPressed) {
+      playerDirection = PlayerDirection.left;
+    } else if (isRightKeyPressed) {
+      playerDirection = PlayerDirection.right;
+    } else {
+      playerDirection = PlayerDirection.none;
+    }
+    return super.onKeyEvent(event, keysPressed);
+  }
 
   void _loadAnimations() {
     idleAnimations = _getAnimationData(state: PlayerState.idle);
@@ -66,61 +99,28 @@ class Player extends SpriteAnimationGroupComponent
 
   void _updatePlayerMovement(double dt) {
     double directionX = 0.0;
-    switch (_playerDirection) {
-      case MovementDirection.left:
+    switch (playerDirection) {
+      case PlayerDirection.left:
         if (isFacingRight) {
           flipHorizontallyAroundCenter();
           isFacingRight = false;
         }
         directionX -= moveSpeed;
         current = PlayerState.running;
-      case MovementDirection.right:
+      case PlayerDirection.right:
         if (isFacingRight == false) {
           flipHorizontallyAroundCenter();
           isFacingRight = true;
         }
         directionX += moveSpeed;
         current = PlayerState.running;
-      case MovementDirection.none:
+      case PlayerDirection.none:
         current = PlayerState.idle;
         break;
     }
 
     velocity = Vector2(directionX, 0);
     position += velocity * dt;
-  }
-
-  @override
-  FutureOr<void> onLoad() async {
-    _loadAnimations();
-    return super.onLoad();
-  }
-
-  @override
-  void update(double dt) {
-    _updatePlayerMovement(dt);
-    return super.update(dt);
-  }
-
-  @override
-  bool onKeyEvent(KeyEvent event, Set<LogicalKeyboardKey> keysPressed) {
-    final bool isLeftKeyPressed =
-        keysPressed.contains(LogicalKeyboardKey.keyA) ||
-            keysPressed.contains(LogicalKeyboardKey.arrowLeft);
-    final bool isRightKeyPressed =
-        keysPressed.contains(LogicalKeyboardKey.keyD) ||
-            keysPressed.contains(LogicalKeyboardKey.arrowRight);
-
-    if (isLeftKeyPressed && isRightKeyPressed) {
-      _playerDirection = MovementDirection.none;
-    } else if (isLeftKeyPressed) {
-      _playerDirection = MovementDirection.left;
-    } else if (isRightKeyPressed) {
-      _playerDirection = MovementDirection.right;
-    } else {
-      _playerDirection = MovementDirection.none;
-    }
-    return super.onKeyEvent(event, keysPressed);
   }
 }
 

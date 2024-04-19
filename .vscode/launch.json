@@ -11,10 +11,10 @@
             "args": ["-d", "3A4DC4F5-E5AD-45D5-AB08-FE5E1C068A09"]
         },
         {
-            "name": "Profile",
+            "name": "Debug",
             "request": "launch",
             "type": "dart",
-            "flutterMode": "profile"
+            "flutterMode": "debug"
         },
         {
             "name": "Mac",
